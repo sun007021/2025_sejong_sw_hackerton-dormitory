@@ -140,7 +140,10 @@ class StudentResponse(StudentBase):
 
     id: UUID = Field(..., description="Student UUID")
     is_matched: bool = Field(..., description="Whether student has been matched")
-    matched_room_id: Optional[UUID] = Field(None, description="Matched room ID if matched")
+    matched_room_id: Optional[int] = Field(None, description="Matched room ID if matched")
+    my_satisfaction_score: Optional[float] = Field(None, description="My satisfaction score with roommate")
+    partner_satisfaction_score: Optional[float] = Field(None, description="Roommate's satisfaction score with me")
+    cluster_id: Optional[int] = Field(None, description="Cluster ID for matching algorithm")
     created_at: datetime = Field(..., description="Creation timestamp")
     updated_at: datetime = Field(..., description="Last update timestamp")
 
@@ -176,6 +179,9 @@ class StudentResponse(StudentBase):
                 "weight_personality": 50,
                 "is_matched": False,
                 "matched_room_id": None,
+                "my_satisfaction_score": None,
+                "partner_satisfaction_score": None,
+                "cluster_id": None,
                 "created_at": "2025-12-23T14:30:00Z",
                 "updated_at": "2025-12-23T14:30:00Z",
             }

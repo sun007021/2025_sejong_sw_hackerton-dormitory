@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 from sqlalchemy import (
-    Column, String, Integer, Boolean, DateTime, UUID, CheckConstraint, Index
+    Column, String, Integer, Boolean, DateTime, UUID, Float, CheckConstraint, Index
 )
 from sqlalchemy.sql import func
 from app.models.base import Base
@@ -54,9 +54,12 @@ class Student(Base):
     weight_age = Column(Integer, default=50)
     weight_personality = Column(Integer, default=50)
 
-    # Matching Status (for future use)
+    # Matching Status
     is_matched = Column(Boolean, default=False, index=True)
-    matched_room_id = Column(UUID(as_uuid=True), nullable=True)
+    matched_room_id = Column(Integer, nullable=True, index=True)
+    my_satisfaction_score = Column(Float, nullable=True)
+    partner_satisfaction_score = Column(Float, nullable=True)
+    cluster_id = Column(Integer, nullable=True)
 
     # Timestamps
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
