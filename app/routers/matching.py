@@ -14,7 +14,8 @@ from app.schemas.matching import (
     MatchingExecuteResponse,
     MatchingStatusResponse,
     MatchingResultsResponse,
-    ResetMatchingResponse
+    ResetMatchingResponse,
+    MatchingStatisticsDetailResponse
 )
 
 
@@ -174,4 +175,31 @@ async def preview_matching(db: AsyncSession = Depends(get_db)):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Unexpected error during matching preview: {str(e)}"
+        )
+
+
+@router.get(
+    "/statistics",
+    response_model=MatchingStatisticsDetailResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Get detailed matching statistics",
+    description="""
+Get comprehensive statistics about current matching results including:
+- Individual satisfaction scores (average, median, min, max, standard deviation)
+- Room-level satisfaction statistics
+- Distribution of satisfaction scores by range (0-20, 20-40, 40-60, 60-80, 80-100)
+    """
+)
+async def get_matching_statistics(db: AsyncSession = Depends(get_db)):
+    """Get detailed matching statistics."""
+    try:
+        service = MatchingService(db)
+        result = await service.get_detailed_statistics()
+
+        return MatchingStatisticsDetailResponse(**result)
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error retrieving matching statistics: {str(e)}"
         )

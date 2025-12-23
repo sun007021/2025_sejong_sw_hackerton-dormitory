@@ -152,3 +152,53 @@ class ResetMatchingResponse(BaseModel):
             }
         }
     }
+
+
+class MatchingStatisticsDetailResponse(BaseModel):
+    """Detailed statistics for current matching results."""
+
+    total_rooms: int = Field(..., description="Total number of matched rooms")
+    total_students: int = Field(..., description="Total number of matched students")
+
+    # Individual satisfaction statistics
+    average_satisfaction: float = Field(..., description="Average satisfaction score across all students")
+    median_satisfaction: float = Field(..., description="Median satisfaction score")
+    min_satisfaction: float = Field(..., description="Minimum satisfaction score")
+    max_satisfaction: float = Field(..., description="Maximum satisfaction score")
+    std_satisfaction: float = Field(..., description="Standard deviation of satisfaction scores")
+
+    # Room average satisfaction statistics
+    average_room_satisfaction: float = Field(..., description="Average of room average satisfactions")
+    median_room_satisfaction: float = Field(..., description="Median of room average satisfactions")
+    min_room_satisfaction: float = Field(..., description="Minimum room average satisfaction")
+    max_room_satisfaction: float = Field(..., description="Maximum room average satisfaction")
+    std_room_satisfaction: float = Field(..., description="Standard deviation of room average satisfactions")
+
+    # Distribution
+    satisfaction_distribution: dict = Field(..., description="Distribution of satisfaction scores by range")
+
+    model_config = {
+        "json_schema_extra": {
+            "example": {
+                "total_rooms": 360,
+                "total_students": 720,
+                "average_satisfaction": 78.5,
+                "median_satisfaction": 79.2,
+                "min_satisfaction": 45.3,
+                "max_satisfaction": 98.7,
+                "std_satisfaction": 12.4,
+                "average_room_satisfaction": 78.5,
+                "median_room_satisfaction": 79.0,
+                "min_room_satisfaction": 50.2,
+                "max_room_satisfaction": 96.5,
+                "std_room_satisfaction": 10.8,
+                "satisfaction_distribution": {
+                    "0-20": 0,
+                    "20-40": 5,
+                    "40-60": 45,
+                    "60-80": 320,
+                    "80-100": 350
+                }
+            }
+        }
+    }

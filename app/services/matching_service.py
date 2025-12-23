@@ -168,3 +168,14 @@ class MatchingService:
             "limit": limit,
             "rooms": rooms
         }
+
+    async def get_detailed_statistics(self) -> dict:
+        """Get detailed statistics about matching results.
+
+        Returns:
+            Dictionary with comprehensive statistics including:
+            - Average, median, min, max, standard deviation of satisfaction scores
+            - Room-level statistics
+            - Distribution of satisfaction scores
+        """
+        return await self.repository.get_detailed_statistics()
