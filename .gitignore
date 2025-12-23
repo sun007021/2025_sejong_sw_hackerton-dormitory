@@ -24,8 +24,8 @@ MANIFEST
 # Virtual Environment
 .venv/
 venv/
-ENV/
-env/
+
+
 
 # IDE
 .vscode/
@@ -35,8 +35,7 @@ env/
 *~
 .DS_Store
 
-# Environment variables
-.env
+
 
 # Database
 *.db
